@@ -1,0 +1,121 @@
+{
+    "name": "beginner_workflow",
+    "description": "新手入门工作流模板",
+    "version": "1.0.0",
+    "nodes": [
+        {
+            "id": "start_node",
+            "type": "start",
+            "name": "开始节点",
+            "description": "工作流的起点,接收用户输入",
+            "config": {
+                "input_params": [
+                    {
+                        "name": "user_input",
+                        "type": "string",
+                        "required": true,
+                        "description": "用户输入的内容"
+                    },
+                    {
+                        "name": "session_name",
+                        "type": "string",
+                        "required": false,
+                        "description": "会话名称"
+                    }
+                ]
+            }
+        },
+        {
+            "id": "intent_node",
+            "type": "intent_recognition",
+            "name": "意图识别节点",
+            "description": "分析用户输入的意图",
+            "config": {
+                "model": "gpt-4",
+                "system_prompt": "你是一个意图识别专家,需要理解用户的真实意图",
+                "temperature": 0.7,
+                "max_tokens": 500
+            }
+        },
+        {
+            "id": "process_node",
+            "type": "process",
+            "name": "基础处理节点",
+            "description": "处理文本和图像数据",
+            "config": {
+                "operations": [
+                    {
+                        "name": "text_process",
+                        "type": "text",
+                        "enabled": true
+                    },
+                    {
+                        "name": "image_process",
+                        "type": "image",
+                        "enabled": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": "response_node",
+            "type": "response",
+            "name": "回复生成节点",
+            "description": "生成回复内容",
+            "config": {
+                "model": "gpt-4",
+                "system_prompt": "生成友好的回复",
+                "temperature": 0.8,
+                "max_tokens": 1000
+            }
+        },
+        {
+            "id": "end_node",
+            "type": "end",
+            "name": "结束节点",
+            "description": "工作流的终点,输出结果",
+            "config": {
+                "output_format": "json"
+            }
+        }
+    ],
+    "connections": [
+        {
+            "from": "start_node",
+            "to": "intent_node",
+            "description": "传递用户输入到意图识别"
+        },
+        {
+            "from": "intent_node",
+            "to": "process_node",
+            "description": "传递意图识别结果到处理节点"
+        },
+        {
+            "from": "process_node",
+            "to": "response_node",
+            "description": "传递处理结果到回复生成"
+        },
+        {
+            "from": "response_node",
+            "to": "end_node",
+            "description": "传递生成的回复到输出"
+        }
+    ],
+    "variables": [
+        {
+            "name": "user_intent",
+            "type": "string",
+            "description": "存储识别出的用户意图"
+        },
+        {
+            "name": "processed_data",
+            "type": "object",
+            "description": "存储处理后的数据"
+        },
+        {
+            "name": "response_content",
+            "type": "string",
+            "description": "存储生成的回复内容"
+        }
+    ]
+} 

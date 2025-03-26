@@ -1,0 +1,120 @@
+{
+    "name": "emotional_companion",
+    "description": "情感陪聊助手 - 专注于情感交互和人设塑造",
+    "version": "1.0.0",
+    "nodes": [
+        {
+            "id": "chat_input",
+            "type": "start",
+            "name": "对话输入",
+            "config": {
+                "input_params": [
+                    {
+                        "name": "user_message",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "user_emotion",
+                        "type": "string",
+                        "required": false
+                    }
+                ]
+            }
+        },
+        {
+            "id": "emotion_analysis",
+            "type": "sentiment",
+            "name": "情绪分析",
+            "config": {
+                "model": "gpt-4",
+                "aspects": [
+                    "情绪类型",
+                    "情绪强度",
+                    "情绪变化",
+                    "潜在需求"
+                ]
+            }
+        },
+        {
+            "id": "personality_system",
+            "type": "character",
+            "name": "人设系统",
+            "config": {
+                "character_traits": {
+                    "性格": "温柔理解",
+                    "说话方式": "亲和自然",
+                    "兴趣爱好": "多元化",
+                    "价值观": "积极正向"
+                },
+                "interaction_style": "empathetic"
+            }
+        },
+        {
+            "id": "emotional_response",
+            "type": "llm",
+            "name": "情感回复",
+            "config": {
+                "model": "gpt-4",
+                "temperature": 0.8,
+                "system_prompt": "你是一个富有同理心的情感陪伴者",
+                "response_strategies": [
+                    "情感共鸣",
+                    "积极引导",
+                    "温暖支持",
+                    "理性建议"
+                ]
+            }
+        },
+        {
+            "id": "relationship_manager",
+            "type": "relationship",
+            "name": "关系管理",
+            "config": {
+                "metrics": [
+                    "亲密度",
+                    "信任度",
+                    "互动质量",
+                    "话题深度"
+                ],
+                "memory_key": "relationship_history"
+            }
+        }
+    ],
+    "connections": [
+        {
+            "from": "chat_input",
+            "to": "emotion_analysis"
+        },
+        {
+            "from": "emotion_analysis",
+            "to": ["personality_system", "relationship_manager"]
+        },
+        {
+            "from": ["personality_system", "relationship_manager"],
+            "to": "emotional_response"
+        }
+    ],
+    "variables": [
+        {
+            "name": "emotion_state",
+            "type": "object",
+            "description": "当前情绪状态分析"
+        },
+        {
+            "name": "personality_context",
+            "type": "object",
+            "description": "人设上下文信息"
+        },
+        {
+            "name": "relationship_data",
+            "type": "object",
+            "description": "关系互动数据"
+        },
+        {
+            "name": "response_strategy",
+            "type": "string",
+            "description": "选择的回复策略"
+        }
+    ]
+} 

@@ -1,0 +1,56 @@
+{
+  "name": "鸭嘴兽",
+  "english_name": "Platypus",
+  "description": "鸭嘴兽插件是一个强大的自然语言处理工具，可以帮助用户进行文本分析、情感识别和语义理解。",
+  "parameters": [
+    {
+      "name": "query",
+      "description": "用户的查询文本，插件将对此文本进行分析",
+      "source": "默认参数"
+    },
+    {
+      "name": "mode",
+      "description": "分析模式，可选值：'basic'(基础分析)、'advanced'(高级分析)、'sentiment'(情感分析)",
+      "source": "默认参数"
+    },
+    {
+      "name": "language",
+      "description": "文本语言，默认为'auto'(自动检测)，也可指定具体语言如'zh'(中文)、'en'(英文)",
+      "source": "默认参数"
+    },
+    {
+      "name": "max_tokens",
+      "description": "返回结果的最大token数量，默认为1000",
+      "source": "默认参数"
+    }
+  ],
+  "examples": [
+    {
+      "code": "{\n  \"query\": \"分析这段文本的情感倾向：我今天非常开心，因为我收到了一份意外的礼物。\",\n  \"mode\": \"sentiment\",\n  \"language\": \"zh\"\n}",
+      "source": "示例模板"
+    },
+    {
+      "code": "{\n  \"query\": \"What is the main topic of this text: AI technology has been rapidly evolving in recent years.\",\n  \"mode\": \"basic\",\n  \"language\": \"en\"\n}",
+      "source": "示例模板"
+    }
+  ],
+  "usage_scenarios": [
+    "文本情感分析",
+    "关键信息提取",
+    "主题识别",
+    "语义理解",
+    "内容摘要生成"
+  ],
+  "api_endpoints": [
+    {
+      "url": "https://api.coze.com/v1/plugins/platypus/analyze",
+      "source": "API模板"
+    }
+  ],
+  "response_formats": [
+    {
+      "format": "{\n  \"result\": {\n    \"analysis\": \"这是一段表达积极情感的文本，情感倾向分值为0.87（范围-1到1）。\",\n    \"sentiment\": \"positive\",\n    \"score\": 0.87,\n    \"keywords\": [\"开心\", \"礼物\", \"意外\"]\n  },\n  \"status\": \"success\"\n}",
+      "source": "响应模板"
+    }
+  ]
+}

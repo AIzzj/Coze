@@ -1,0 +1,47 @@
+{
+  "name": "鸭嘴兽插件",
+  "version": "1.0.0",
+  "description": "鸭嘴兽插件是一个强大的自然语言处理工具，可以帮助用户进行文本分析、情感识别和语义理解。",
+  "api": {
+    "url": "https://api.coze.com/v1/plugins/platypus/analyze",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer YOUR_API_KEY"
+    }
+  },
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "description": "用户的查询文本，插件将对此文本进行分析"
+      },
+      "mode": {
+        "type": "string",
+        "description": "分析模式，可选值：'basic'(基础分析)、'advanced'(高级分析)、'sentiment'(情感分析)"
+      },
+      "language": {
+        "type": "string",
+        "description": "文本语言，默认为'auto'(自动检测)，也可指定具体语言如'zh'(中文)、'en'(英文)"
+      },
+      "max_tokens": {
+        "type": "string",
+        "description": "返回结果的最大token数量，默认为1000"
+      }
+    }
+  },
+  "response": {
+    "type": "object",
+    "properties": {
+      "result": {
+        "type": "object",
+        "description": "分析结果"
+      },
+      "status": {
+        "type": "string",
+        "description": "请求状态"
+      }
+    }
+  }
+}

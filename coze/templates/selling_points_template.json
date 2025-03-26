@@ -1,0 +1,130 @@
+{
+    "name": "selling_points_extraction",
+    "description": "卖点提炼助手 - 专注于电商产品卖点分析和提取",
+    "version": "1.0.0",
+    "nodes": [
+        {
+            "id": "product_input",
+            "type": "start",
+            "name": "产品信息输入",
+            "config": {
+                "input_params": [
+                    {
+                        "name": "product_info",
+                        "type": "object",
+                        "required": true,
+                        "properties": {
+                            "name": "string",
+                            "category": "string",
+                            "description": "string",
+                            "price": "number",
+                            "features": "array"
+                        }
+                    },
+                    {
+                        "name": "target_audience",
+                        "type": "string",
+                        "required": false
+                    }
+                ]
+            }
+        },
+        {
+            "id": "market_analysis",
+            "type": "market_research",
+            "name": "市场分析",
+            "config": {
+                "analysis_points": [
+                    "竞品分析",
+                    "市场定位",
+                    "用户需求",
+                    "价格区间"
+                ],
+                "data_sources": [
+                    "market_reports",
+                    "competitor_data",
+                    "user_reviews"
+                ]
+            }
+        },
+        {
+            "id": "feature_extraction",
+            "type": "nlp",
+            "name": "特征提取",
+            "config": {
+                "model": "gpt-4",
+                "system_prompt": "你是产品分析专家,需要提取产品最具竞争力的特征",
+                "extraction_focus": [
+                    "核心功能",
+                    "独特优势",
+                    "用户价值",
+                    "情感诉求"
+                ]
+            }
+        },
+        {
+            "id": "selling_points_generation",
+            "type": "llm",
+            "name": "卖点生成",
+            "config": {
+                "model": "gpt-4",
+                "temperature": 0.7,
+                "formats": [
+                    "短视频文案",
+                    "直播话术",
+                    "图文描述",
+                    "产品标题"
+                ]
+            }
+        },
+        {
+            "id": "conversion_optimization",
+            "type": "optimization",
+            "name": "转化率优化",
+            "config": {
+                "optimization_aspects": [
+                    "文案吸引力",
+                    "说服力度",
+                    "购买动机",
+                    "行动召唤"
+                ]
+            }
+        }
+    ],
+    "connections": [
+        {
+            "from": "product_input",
+            "to": ["market_analysis", "feature_extraction"]
+        },
+        {
+            "from": ["market_analysis", "feature_extraction"],
+            "to": "selling_points_generation"
+        },
+        {
+            "from": "selling_points_generation",
+            "to": "conversion_optimization"
+        }
+    ],
+    "variables": [
+        {
+            "name": "market_insights",
+            "type": "object",
+            "description": "市场分析结果"
+        },
+        {
+            "name": "key_features",
+            "type": "array",
+            "description": "提取的核心特征"
+        },
+        {
+            "name": "selling_points",
+            "type": "object",
+            "description": "生成的卖点文案"
+        },
+        {
+            "name": "conversion_score",
+            "type": "number",
+            "description": "转化率评分"
+        }
+    ]
+} 

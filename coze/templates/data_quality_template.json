@@ -1,0 +1,141 @@
+{
+    "name": "data_quality_inspection",
+    "description": "数据质量检查助手 - 专注于数据分析和质量控制",
+    "version": "1.0.0",
+    "nodes": [
+        {
+            "id": "data_input",
+            "type": "start",
+            "name": "数据输入",
+            "config": {
+                "input_params": [
+                    {
+                        "name": "data_source",
+                        "type": "object",
+                        "required": true,
+                        "properties": {
+                            "type": "string",
+                            "format": "string",
+                            "size": "number"
+                        }
+                    },
+                    {
+                        "name": "quality_requirements",
+                        "type": "object",
+                        "required": false
+                    }
+                ]
+            }
+        },
+        {
+            "id": "data_preprocessing",
+            "type": "preprocessing",
+            "name": "数据预处理",
+            "config": {
+                "operations": [
+                    "数据清洗",
+                    "格式标准化",
+                    "缺失值处理",
+                    "异常值检测"
+                ],
+                "validation_rules": {
+                    "null_check": true,
+                    "type_check": true,
+                    "range_check": true
+                }
+            }
+        },
+        {
+            "id": "quality_analysis",
+            "type": "analysis",
+            "name": "质量分析",
+            "config": {
+                "metrics": [
+                    "完整性",
+                    "准确性",
+                    "一致性",
+                    "时效性"
+                ],
+                "statistical_methods": [
+                    "描述统计",
+                    "分布分析",
+                    "相关性分析"
+                ]
+            }
+        },
+        {
+            "id": "issue_detection",
+            "type": "detection",
+            "name": "问题检测",
+            "config": {
+                "detection_rules": [
+                    "数据重复",
+                    "格式错误",
+                    "逻辑冲突",
+                    "数据偏差"
+                ],
+                "threshold": {
+                    "error_rate": 0.01,
+                    "warning_rate": 0.05
+                }
+            }
+        },
+        {
+            "id": "report_generation",
+            "type": "report",
+            "name": "报告生成",
+            "config": {
+                "report_sections": [
+                    "质量概览",
+                    "详细分析",
+                    "问题清单",
+                    "改进建议"
+                ],
+                "visualization": {
+                    "charts": true,
+                    "tables": true
+                }
+            }
+        }
+    ],
+    "connections": [
+        {
+            "from": "data_input",
+            "to": "data_preprocessing"
+        },
+        {
+            "from": "data_preprocessing",
+            "to": "quality_analysis"
+        },
+        {
+            "from": "quality_analysis",
+            "to": "issue_detection"
+        },
+        {
+            "from": ["quality_analysis", "issue_detection"],
+            "to": "report_generation"
+        }
+    ],
+    "variables": [
+        {
+            "name": "preprocessing_results",
+            "type": "object",
+            "description": "预处理结果统计"
+        },
+        {
+            "name": "quality_metrics",
+            "type": "object",
+            "description": "质量指标数据"
+        },
+        {
+            "name": "detected_issues",
+            "type": "array",
+            "description": "检测到的问题列表"
+        },
+        {
+            "name": "quality_score",
+            "type": "number",
+            "description": "总体质量评分"
+        }
+    ]
+} 

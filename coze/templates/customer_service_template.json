@@ -1,0 +1,133 @@
+{
+    "name": "intelligent_customer_service",
+    "description": "智能客服模板 - 专注于客服场景的智能对话系统",
+    "version": "1.0.0",
+    "nodes": [
+        {
+            "id": "start_node",
+            "type": "start",
+            "name": "用户输入接收",
+            "config": {
+                "input_params": [
+                    {
+                        "name": "user_query",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "user_info",
+                        "type": "object",
+                        "required": false
+                    }
+                ]
+            }
+        },
+        {
+            "id": "intent_recognition",
+            "type": "nlp",
+            "name": "意图识别",
+            "config": {
+                "model": "gpt-4",
+                "system_prompt": "你是客服意图识别专家,需要准确理解用户咨询意图",
+                "intent_categories": [
+                    "产品咨询",
+                    "售后服务",
+                    "投诉建议",
+                    "账户相关",
+                    "其他"
+                ]
+            }
+        },
+        {
+            "id": "knowledge_base",
+            "type": "knowledge_search",
+            "name": "知识库匹配",
+            "config": {
+                "search_method": "semantic",
+                "top_k": 3,
+                "threshold": 0.8,
+                "knowledge_sources": [
+                    "product_docs",
+                    "faq_base",
+                    "solution_base"
+                ]
+            }
+        },
+        {
+            "id": "context_manager",
+            "type": "context",
+            "name": "上下文管理",
+            "config": {
+                "max_turns": 5,
+                "memory_key": "conversation_history"
+            }
+        },
+        {
+            "id": "response_generator",
+            "type": "llm",
+            "name": "回复生成",
+            "config": {
+                "model": "gpt-4",
+                "system_prompt": "你是专业的客服代表,需要用专业、友善的语气回答用户问题",
+                "temperature": 0.7,
+                "max_tokens": 1000
+            }
+        },
+        {
+            "id": "satisfaction_analysis",
+            "type": "sentiment",
+            "name": "满意度分析",
+            "config": {
+                "metrics": [
+                    "response_satisfaction",
+                    "problem_solved",
+                    "service_attitude"
+                ]
+            }
+        }
+    ],
+    "connections": [
+        {
+            "from": "start_node",
+            "to": "intent_recognition"
+        },
+        {
+            "from": "intent_recognition",
+            "to": "knowledge_base"
+        },
+        {
+            "from": "knowledge_base",
+            "to": "context_manager"
+        },
+        {
+            "from": "context_manager",
+            "to": "response_generator"
+        },
+        {
+            "from": "response_generator",
+            "to": "satisfaction_analysis"
+        }
+    ],
+    "variables": [
+        {
+            "name": "user_intent",
+            "type": "string",
+            "description": "识别出的用户意图"
+        },
+        {
+            "name": "knowledge_matches",
+            "type": "array",
+            "description": "匹配到的知识库条目"
+        },
+        {
+            "name": "conversation_context",
+            "type": "object",
+            "description": "对话上下文信息"
+        },
+        {
+            "name": "satisfaction_score",
+            "type": "number",
+            "description": "用户满意度得分"
+        }
+    ]
+} 

@@ -1,0 +1,133 @@
+{
+    "name": "media_content_creation",
+    "description": "自媒体创作助手 - 专注于内容创作和图文生成",
+    "version": "1.0.0",
+    "nodes": [
+        {
+            "id": "topic_input",
+            "type": "start",
+            "name": "主题输入",
+            "config": {
+                "input_params": [
+                    {
+                        "name": "topic",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "platform",
+                        "type": "string",
+                        "enum": ["微信", "小红书", "抖音", "知乎"]
+                    },
+                    {
+                        "name": "style",
+                        "type": "string",
+                        "enum": ["正式", "轻松", "幽默", "专业"]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "content_planning",
+            "type": "llm",
+            "name": "内容规划",
+            "config": {
+                "model": "gpt-4",
+                "system_prompt": "你是内容策划专家,需要根据主题规划内容框架",
+                "output_format": {
+                    "title": "string",
+                    "sections": "array",
+                    "keywords": "array"
+                }
+            }
+        },
+        {
+            "id": "content_generation",
+            "type": "llm",
+            "name": "内容生成",
+            "config": {
+                "model": "gpt-4",
+                "temperature": 0.8,
+                "max_tokens": 2000,
+                "style_guide": {
+                    "tone": "platform_specific",
+                    "length": "auto_adjust"
+                }
+            }
+        },
+        {
+            "id": "image_generation",
+            "type": "image",
+            "name": "配图生成",
+            "config": {
+                "model": "dall-e-3",
+                "size": "1024x1024",
+                "style": "platform_specific",
+                "number": 3
+            }
+        },
+        {
+            "id": "seo_optimization",
+            "type": "nlp",
+            "name": "SEO优化",
+            "config": {
+                "keywords_density": 0.02,
+                "readability_check": true,
+                "platform_specific_rules": true
+            }
+        },
+        {
+            "id": "content_review",
+            "type": "llm",
+            "name": "内容审核",
+            "config": {
+                "check_points": [
+                    "敏感词检查",
+                    "品牌调性",
+                    "平台规范",
+                    "文案流畅度"
+                ]
+            }
+        }
+    ],
+    "connections": [
+        {
+            "from": "topic_input",
+            "to": "content_planning"
+        },
+        {
+            "from": "content_planning",
+            "to": "content_generation"
+        },
+        {
+            "from": "content_generation",
+            "to": ["image_generation", "seo_optimization"]
+        },
+        {
+            "from": ["image_generation", "seo_optimization"],
+            "to": "content_review"
+        }
+    ],
+    "variables": [
+        {
+            "name": "content_plan",
+            "type": "object",
+            "description": "内容规划结果"
+        },
+        {
+            "name": "generated_content",
+            "type": "string",
+            "description": "生成的文案内容"
+        },
+        {
+            "name": "generated_images",
+            "type": "array",
+            "description": "生成的配图列表"
+        },
+        {
+            "name": "seo_score",
+            "type": "number",
+            "description": "SEO优化评分"
+        }
+    ]
+} 
